@@ -1,6 +1,8 @@
+namespace Savas.Revision.DynamicProgramming;
+
 using static System.Console;
 
-public class Tribonacci : IExercise {
+public class TribonacciExercise : IExercise {
 struct Test {
     public int n;
     public int expected;

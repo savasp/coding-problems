@@ -1,6 +1,8 @@
+namespace Savas.Revision.DynamicProgramming;
+
 using static System.Console;
 
-public class MinCostClimbingStairs : IExercise {
+public class MinCostClimbingStairsExercise : IExercise {
 struct Test {
     public int[] stairs;
     public int expected;
