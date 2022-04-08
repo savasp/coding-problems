@@ -72,7 +72,7 @@ public class RluCacheExercise : IExercise {
             }
         };
 
-        WriteLine("What is the minimum cost for climbing the stairs?");
+        WriteLine("Implement an RLU Cache.");
 
         var t = 0;
         foreach (var test in tests) {

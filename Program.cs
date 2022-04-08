@@ -8,7 +8,9 @@ class Program {
 //        new DynamicProgramming.TribonacciExercise(),
 //        new DynamicProgramming.MinCostClimbingStairsExercise(),
 //        new DynamicProgramming.HouseRobberExercise(),
-        new DataStructures.RluCacheExercise(),
+//        new DataStructures.RluCacheExercise(),
+//        new Algorithms.TwoSumExercise(),
+    new Algorithms.LongestSubstringExercise(),
     };
 
    static void Main() {
@@ -20,3 +22,8 @@ class Program {
         }
     }
 }
+
+static class Extensions {
+    public static String MapToString(this IEnumerable<int> array) => array.Select(i => i + " ").Aggregate((str, i) => (str + i));
+}
+
