@@ -10,7 +10,8 @@ class Program {
 //        new DynamicProgramming.HouseRobberExercise(),
 //        new DataStructures.RluCacheExercise(),
 //        new Algorithms.TwoSumExercise(),
-    new Algorithms.LongestSubstringExercise(),
+//        new Algorithms.LongestSubstringExercise(),
+        new Algorithms.RomanToIntegerExercise(),
     };
 
    static void Main() {
