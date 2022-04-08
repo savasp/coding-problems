@@ -11,7 +11,8 @@ class Program {
 //        new DataStructures.RluCacheExercise(),
 //        new Algorithms.TwoSumExercise(),
 //        new Algorithms.LongestSubstringExercise(),
-        new Algorithms.RomanToIntegerExercise(),
+//        new Algorithms.RomanToIntegerExercise(),
+        new Algorithms.IntegerToRomanExercise(),
     };
 
    static void Main() {
