@@ -12,7 +12,8 @@ class Program {
 //        new Algorithms.TwoSumExercise(),
 //        new Algorithms.LongestSubstringExercise(),
 //        new Algorithms.RomanToIntegerExercise(),
-        new Algorithms.IntegerToRomanExercise(),
+//        new Algorithms.IntegerToRomanExercise(),
+        new Algorithms.GroupAnagramsExercise(),
     };
 
    static void Main() {
@@ -26,6 +27,6 @@ class Program {
 }
 
 static class Extensions {
-    public static String MapToString(this IEnumerable<int> array) => array.Select(i => i + " ").Aggregate((str, i) => (str + i));
+    public static String MapToString<T>(this IEnumerable<T> array) => array.Select(i => i + " ").Aggregate((str, i) => (str + i));
 }
 
