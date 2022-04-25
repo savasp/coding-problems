@@ -1,59 +1,57 @@
-namespace Savas.Revision.Algorithms;
+﻿namespace Savas.Revision.Algorithms;
 
-using static System.Console;
+using Xunit;
 
-static class Extensions {
-    public static String MapToString(this int[] array) => array.Select(i => i + " ").Aggregate((str, i) => (str + i));
-}
-
-public class TwoSumExercise : IExercise {
-    record Test(int target, int[] numbers, int[] expected);
-    public String Name => "Two Sum";
-
-    public void Start() {
-        var tests = new Test[] {
-            new Test(3, new int[] {1, 2, 3}, new int[] {0, 1}),
-            new Test(1, new int[] {1, 2, 3}, new int[] {-1, -1}),
-            new Test(2, new int[] {1, 1}, new int[] {0, 1}),
-            new Test(-3, new int[] {1, -2, -1}, new int[] {0, 2}),
-            new Test(-1, new int[] {0, -2, 1}, new int[] {1, 2}),
-            new Test(4, new int[] {0, 1, 2, 1, 3, 6}, new int[] {1, 4}),
-        };
-
-        WriteLine("What are the indexes of the two array elements that add up to X.");
-
-        for (int i = 0; i < tests.Length; i++) {
-            var test = tests[i];
-            
-            var str = $"Test case {i}";
-            WriteLine();
-            WriteLine(str);
-            WriteLine(new String('.', str.Length));
-
-            Write($"Target: {test.target}, Numbers: ");
-            WriteLine(test.numbers.MapToString());
-
-            int[] solution = TwoSum(test.target, test.numbers);
-
-            WriteLine($"Expected: {test.expected.MapToString()}, Solution: {solution.MapToString()}.");
-            WriteLine(test.expected.OrderBy(i => i).SequenceEqual(solution.OrderBy(i => i)) ? "SUCCESS" : "FAILURE");
-        }
-    }
-
-    int[] TwoSum(int target, int[] numbers) {
+public class TwoSum
+{
+    /// <summary>
+    /// Identifies the indexes in the array of the two numbers that add up
+    /// to the given integer.
+    /// </summary>
+    /// <param name="target">The target sum.</param>
+    /// <param name="numbers">The set of numbers.</param>
+    /// <returns>The indexes of the two numbers that add up to the target number.
+    /// (-1, -1) if no pair is identified.</returns>
+    public static int[] Find(int target, int[] numbers)
+    {
         var map = new Dictionary<int, int>();
 
-        for (int i = 0; i < numbers.Length; i++) {
+        for (int i = 0; i < numbers.Length; i++)
+        {
             var x = target - numbers[i];
-            if (map.ContainsKey(x)) {
+            if (map.ContainsKey(x))
+            {
                 return new int[] { map[x], i };
             }
 
-            if (!map.ContainsKey(numbers[i])) {
+            if (!map.ContainsKey(numbers[i]))
+            {
                 map.Add(numbers[i], i);
             }
         }
 
         return new int[] { -1, -1 };
+    }
+}
+
+///--- Testing infrastrucutre and test cases
+public class TwoSumTests
+{
+    public static List<object[]> Data => new List<object[]>
+    {
+        new object[] { 3, new int[] {1, 2, 3}, new int[] {0, 1} },
+        new object[] { 1, new int[] {1, 2, 3}, new int[] {-1, -1} },
+        new object[] { 2, new int[] {1, 1}, new int[] {0, 1} },
+        new object[] { -3, new int[] {1, -2, -1}, new int[] {1, 2} },
+        new object[] { -1, new int[] {0, -2, 1}, new int[] {1, 2} },
+        new object[] { 4, new int[] {0, 1, 2, 1, 3, 6}, new int[] {1, 4} },
+    };
+
+    [Theory]
+    [MemberData(nameof(TwoSumTests.Data))]
+    public void TwoSumTest(int target, int[] numbers, int[] expected) {
+        var answer = TwoSum.Find(target, numbers);
+
+        Assert.True((answer[0] == expected[0]) && (answer[1] == expected[1]));
     }
 }

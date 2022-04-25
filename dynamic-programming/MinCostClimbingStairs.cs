@@ -1,54 +1,49 @@
-namespace Savas.Revision.DynamicProgramming;
+﻿namespace Savas.Revision.DynamicProgramming;
 
-using static System.Console;
+using Xunit;
 
-public class MinCostClimbingStairsExercise : IExercise {
-struct Test {
-    public int[] stairs;
-    public int expected;
-}
-
-    public String Name => "Min Cost Climbing Stairs";
-    public void Start() {
-        var tests = new Test[] {
-            new Test { stairs = new int[] { 1, 100, 1, 1, 1, 100, 1, 1, 100, 1}, expected = 6},
-            new Test { stairs = new int[] { 10, 15, 20}, expected = 15},
-            new Test { stairs = new int[] { 1, 100, 1}, expected = 2},
-            new Test { stairs = new int[] { 100, 1, 1}, expected = 1},
-            new Test { stairs = new int[] {3, 2, 1, 3}, expected = 3 },
-            new Test { stairs = new int[] {2, 1}, expected = 1},
-            new Test { stairs = new int[] {1, 2}, expected = 1},
-            new Test { stairs = new int[] {2, 1, 1, 2}, expected = 2}
-        };
-
-        WriteLine("What is the minimum cost for climbing the stairs?");
-
-        var i = 0;
-        foreach (var test in tests) {
-            var str = $"Test case {i++}";
-            WriteLine();
-            WriteLine(str);
-            WriteLine(new String('.', str.Length));
-
-            test.stairs.ToList().ForEach(i => Write(i + " "));
-            WriteLine();
-
-            var min = iterative(test.stairs);
-            WriteLine($"Using the iterative function, the min cost for climbing the stairs is {min}");
-            WriteLine(min != test.expected ? "Failed!!!" : "Passed!");
-
-        }
-    }
-
-    int iterative(int[] stairs) {
+/// <summary>
+/// Get the minimum cost of climbing the stairs. Each stair step has a cost.
+/// One can only climb 1 or 2 steps at a time.
+/// </summary>
+public class MinCostClimbingStairs
+{
+    public static int Find(int[] stairs)
+    {
         var map = new int[stairs.Length + 1];
         map[0] = 0;
         map[1] = 0;
 
-        for (int i = 2; i <= stairs.Length; i++) {
+        for (int i = 2; i <= stairs.Length; i++)
+        {
             map[i] = Math.Min(stairs[i - 1] + map[i - 1], stairs[i - 2] + map[i - 2]);
         }
 
         return map[stairs.Length];
+    }
+}
+
+
+/// --- Test infrastructure and test cases.
+public class MinCostClimbingStairsTests {
+    public static IEnumerable<object[]> Data => new List<object[]>
+    {
+        new object[] { new int[] { 1, 100, 1, 1, 1, 100, 1, 1, 100, 1}, 6},
+        new object[] { new int[] { 10, 15, 20}, 15},
+        new object[] { new int[] { 1, 100, 1}, 2},
+        new object[] { new int[] { 100, 1, 1}, 1},
+        new object[] { new int[] {3, 2, 1, 3}, 3 },
+        new object[] { new int[] {2, 1}, 1},
+        new object[] { new int[] {1, 2}, 1},
+        new object[] { new int[] {2, 1, 1, 2}, 2}
+    };
+
+    [Theory]
+    [MemberData(nameof(Data))]
+    public void MinCostClimbingStairsTest(int[] stairs, int expected)
+    {
+        var answer = MinCostClimbingStairs.Find(stairs);
+
+        Assert.Equal(answer, expected);
     }
 }

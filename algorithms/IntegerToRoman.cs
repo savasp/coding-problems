@@ -1,42 +1,13 @@
-namespace Savas.Revision.Algorithms;
+﻿namespace Savas.Revision.Algorithms;
 
 using System.Text;
+using Xunit;
 
 using static System.Console;
 
-public class IntegerToRomanExercise : IExercise {
-    record Test(int number, string expected);
-    public String Name => "Roman to integer";
+public class IntegerToRoman {
 
-    public void Start() {
-        var tests = new Test[] {
-            new Test(3, "III"),
-            new Test(58, "LVIII"),
-            new Test(1, "I"),
-            new Test(1994, "MCMXCIV"),
-        };
-
-        WriteLine("Convert the given integer to a roman number.");
-
-        for (int t = 0; t < tests.Length; t++) {
-            var test = tests[t];
-            
-            var str = $"Test case {t}";
-            WriteLine();
-            WriteLine(str);
-            WriteLine(new String('.', str.Length));
-
-            WriteLine($"String: {test.number}");
-
-            var answer = RomanToInteger(test.number);
-
-            WriteLine($"Expected: {test.expected}, Answer: {answer}.");
-            WriteLine(test.expected == answer ? "SUCCESS" : "FAILURE");
-        }
-    }
-
-    string RomanToInteger(int number) {
-        var romanLetters = new Dictionary<string, int>() {
+    private static Dictionary<string, int> RomanLetters = new Dictionary<string, int>() {
             { "I", 1 },
             { "V", 5 },
             { "X", 10 },
@@ -52,7 +23,14 @@ public class IntegerToRomanExercise : IExercise {
             { "IV", 4 },
         };
 
-        var romanValues = romanLetters.ToDictionary(p => p.Value, p => p.Key);
+    /// <summary>
+    /// Converts the given integer to a roman number.
+    /// </summary>
+    /// <param name="number">The number to convert.</param>
+    /// <returns>The string representation of the roman number.</returns>
+    public static string Convert(int number) {
+
+        var romanValues = RomanLetters.ToDictionary(p => p.Value, p => p.Key);
         var values = romanValues.Keys.OrderByDescending(k => k).ToArray();
 
         var sb = new StringBuilder();
@@ -70,5 +48,24 @@ public class IntegerToRomanExercise : IExercise {
         }
 
         return sb.ToString();
+    }
+
+    /// --- Test infrastructure and test cases
+    public class IntegerToRomanTests {
+
+        public static IEnumerable<object[]> Data => new List<object[]> {
+            new object[] { 3, "III" },
+            new object[] { 58, "LVIII" },
+            new object[] { 1, "I" },
+            new object[] { 1994, "MCMXCIV" },
+        };
+
+        [Theory]
+        [MemberData(nameof(IntegerToRomanTests.Data))]
+        void IntegerToRomanTest(int number, string expected) {
+            var answer = IntegerToRoman.Convert(number);
+
+            Assert.Equal(answer, expected);
+        }
     }
 }
