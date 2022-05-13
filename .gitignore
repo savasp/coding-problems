@@ -3,3 +3,4 @@ obj/
 *.sln
 .vscode/
 .vs/
+.DS_Store
