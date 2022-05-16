@@ -1,4 +1,4 @@
-namespace Savas.Revision.AlgoExpert.TwoSum;
+namespace Savas.Revision.AlgoExpert;
 
 using System;
 using System.Collections.Generic;
